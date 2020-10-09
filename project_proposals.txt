@@ -1,0 +1,7 @@
+Idea 1
+ 
+Now with covid-19, people are worried about if places are going to be packed are not. The goal of the site is to show the probability of many people being at the location you would like to go.  One way we can help people out to see this is we can use uber’s movement analysis and check what average times would be and compare it to the current travel time on the uber app. Along with this, if you put in an address/restaurant, we can check the reviews of restaurants, bars, etc. in a .2 mile radius of the location put in to see the probability of foot traffic in the area at the time being asked. For this we can use the peak hours function from google if applicable, and yelp for reviews. We can also check local covid guidelines to see whether or not it is high risk when you go out. We could also incorporate data from the New York Times Covid19 API.
+ 
+Idea 2
+ 
+Travelling on planes has now become a health hazard due to the pandemic. The goal for our website is to tell you the best way to get to your destination. We can use airline databases to tell what is the best and safest airline to use. We use global covid numbers (and domestic for people traveling from state to state), to determine the safety of you going to your destination. For now, the only airline database I’ve found is for US airlines, so the flights would have to be from/to US. It could also test the airport if reliable data is found. We could also incorporate data from the New York Times Covid19 API.
