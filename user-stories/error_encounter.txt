@@ -1,0 +1,4 @@
+If something goes wrong, such as the restaurant does not exist (not entered in by developers yet) or there is not enough information regarding covid data, 
+I want to be able to send the developers a note or request or email that I would like to have more information regarding this restaurant or more information 
+regarding covid safety around this restaurant. If the information is not available, I want a message to be displayed that will tell me the information will 
+be displayed as soon as more information is available or some other type of message.
