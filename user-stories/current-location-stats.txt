@@ -1,0 +1,2 @@
+When a user logs into the app, stats regarding covid in the current location will be displayed- kindof like when you open the weather app. There will be stats
+on covid numbers, mask compliance, and how busy your location is. It will also show your location on the heat map. 
