@@ -1,0 +1,2 @@
+If I input a location and it appears to be a COVID hotspot, I would want a popup warning me that this location is a hot spot, and warning me to not go. 
+I would also want suggestions for different times to go that are not as busy, as well as statistics regarding the covid situation in that area. 
