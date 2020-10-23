@@ -1,0 +1,1 @@
+Application makes recommendation on whether or not to visit a site based on statistics retrieved

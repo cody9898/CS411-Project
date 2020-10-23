@@ -1,0 +1,4 @@
+The user is curious about a specific location's COVID risk. By clicking or searching for a location,
+the app will give a risk rating for that location as a function of how crowded, propensity for mask
+wearing, and number of cases in that area. The app may also notify the user of the risk of their
+current location.
