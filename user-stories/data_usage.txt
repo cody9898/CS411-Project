@@ -1,1 +1,1 @@
-Application makes recommendaion on whether or not to visite a site based on statistics retrieved
+Application makes recommendation on whether or not to visit a site based on statistics retrieved
