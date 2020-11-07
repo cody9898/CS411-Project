@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Check COVID stats for a country using API</title>
+    </head>
+    <body>
+        <div style="margin-left: auto; margin-right: auto; margin-top: 100px; width: 50%;">
+            <h1>Check COVID stats for a country using API</h1>
+            <form method="POST">
+                <label for="country">Select country</label>
+                <select name="country" id="country">
+                    {% for country in countries %}
+                    <option 
+                        value="{{ country.Slug }}" 
+                        {% if country.Slug == selected_country %}selected{% endif %}
+                    >
+                        {{ country.Country }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+            {% if result %}
+            <div style="margin-top: 100px;">
+            {{ result.Country }} has {{ result.Cases }} confirmed cases as of today
+            </div>
+            {% endif %}
+        </div>
+    </body>
+</html>
