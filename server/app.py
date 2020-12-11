@@ -1,9 +1,12 @@
 import requests
 from datetime import date, timedelta
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+# Enable CORS support on all routes
+cors = CORS(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -33,3 +36,11 @@ def index():
     response = requests.get('https://api.covid19api.com/countries')
     countries = response.json()
     return countries
+
+@app.route('/ping', methods=['GET'])
+def ping_pong():
+    return jsonify('pong!')
+
+# run app with command python app.py
+if __name__ == '__main__':
+    app.run()
