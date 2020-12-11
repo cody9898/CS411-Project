@@ -2,11 +2,16 @@ import requests
 from datetime import date, timedelta
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import yaml
 
 
 app = Flask(__name__)
+
 # Enable CORS support on all routes
 cors = CORS(app)
+
+# Get creds
+creds = yaml.safe_load(open("creds.yaml", "r"))
 
 
 @app.route('/', methods=['GET', 'POST'])

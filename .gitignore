@@ -3,3 +3,4 @@ venv
 prototype/__pycache__
 .vscode
 prototype/venv
+server/creds.yaml
