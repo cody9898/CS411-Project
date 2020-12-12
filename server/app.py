@@ -11,8 +11,8 @@ app = Flask(__name__)
 cors = CORS(app)
 
 # Get creds
-#creds = yaml.safe_load(open("creds.yaml", "r"))
-#GOOGLE_MAPS_API_KEY = creds["GOOGLE_MAPS_API_KEY"]
+creds = yaml.safe_load(open("creds.yaml", "r"))
+GOOGLE_MAPS_API_KEY = creds["GOOGLE_MAPS_API_KEY"]
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
