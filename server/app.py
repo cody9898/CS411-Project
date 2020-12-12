@@ -11,8 +11,8 @@ app = Flask(__name__)
 cors = CORS(app)
 
 # Get creds
-creds = yaml.safe_load(open("creds.yaml", "r"))
-
+#creds = yaml.safe_load(open("creds.yaml", "r"))
+#GOOGLE_MAPS_API_KEY = creds["GOOGLE_MAPS_API_KEY"]
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -45,6 +45,13 @@ def index():
 @app.route('/ping', methods=['GET'])
 def ping_pong():
     return jsonify('pong!')
+
+@app.route('/search', methods=['GET'])
+def search():
+
+    results = requests.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+Sydney&key="+GOOGLE_MAPS_API_KEY)
+    print("here")
+    return jsonify(results)
 
 # run app with command python app.py
 if __name__ == '__main__':
