@@ -11,7 +11,7 @@ app = Flask(__name__)
 cors = CORS(app)
 
 # Get creds
-creds = yaml.safe_load(open("creds.yaml", "r"))
+#creds = yaml.safe_load(open("creds.yaml", "r"))
 
 
 @app.route('/', methods=['GET', 'POST'])
