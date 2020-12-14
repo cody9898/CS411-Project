@@ -1,6 +1,8 @@
 <template>
   <div>
-    {{placeid}}
+    <v-container>
+      <h1> Place id = {{placeid}} </h1>
+    </v-container>
   </div>
 </template>
 

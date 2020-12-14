@@ -100,14 +100,14 @@ export default {
             this.results.push(data.results[i]);
           }
           this.loaded = true;
-          console.log(this.results)
         })
         .catch((error) => {
             console.error(error);
         });
     },
     handleClick(place) {
-      this.$router.push({name: 'Location', params: {placeid: place.place_id}})
+      console.log(place.place_id)
+      this.$router.push({path: `/location/${place.place_id}`})
     }
   }
 };
