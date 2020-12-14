@@ -29,7 +29,7 @@ py -m pip install --user virtualenv
 
 On macOS:
 ```
-py -m pip install --user virtualenv
+python3 -m pip install --user virtualenv
 ```
 
 Install requirements:
