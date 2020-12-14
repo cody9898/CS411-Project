@@ -46,12 +46,15 @@ def index():
 def ping_pong():
     return jsonify('pong!')
 
-@app.route('/search', methods=['GET'])
+@app.route('/search', methods=['POST'])
 def search():
-
-    results = requests.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+Sydney&key="+GOOGLE_MAPS_API_KEY)
-    print("here")
-    return jsonify(results)
+    lat = request.form['lat']
+    lng = request.form['lng']
+    radius = request.form['radius']
+    keyword = request.form['keyword']
+    results = requests.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(lat)+","+str(lng)+"&radius="+str(radius)+"&keyword="+keyword+"&key="+GOOGLE_MAPS_API_KEY)
+    return jsonify(results.text)
+    
 
 # run app with command python app.py
 if __name__ == '__main__':
