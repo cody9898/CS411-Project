@@ -11,8 +11,8 @@ app = Flask(__name__)
 cors = CORS(app)
 
 # Get creds
-#creds = yaml.safe_load(open("creds.yaml", "r"))
-
+creds = yaml.safe_load(open("creds.yaml", "r"))
+GOOGLE_MAPS_API_KEY = creds["GOOGLE_MAPS_API_KEY"]
 
 state_abbr = {"AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"California","CO":"Colorado","CT":"Connecticut",
 "DE":"Delaware","FL":"Florida","GA":"Georgia","HI":"Hawaii","ID":"Idaho","IL":"Illinois","IN":"Indiana","IA":"Iowa",
@@ -64,6 +64,16 @@ def index():
 @app.route('/ping', methods=['GET'])
 def ping_pong():
     return jsonify('pong!')
+
+@app.route('/search', methods=['POST'])
+def search():
+    lat = request.form['lat']
+    lng = request.form['lng']
+    radius = request.form['radius']
+    keyword = request.form['keyword']
+    results = requests.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(lat)+","+str(lng)+"&radius="+str(radius)+"&keyword="+keyword+"&key="+GOOGLE_MAPS_API_KEY)
+    return jsonify(results.text)
+    
 
 # run app with command python app.py
 if __name__ == '__main__':
