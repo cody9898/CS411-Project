@@ -69,6 +69,7 @@ pip install requests
 pip install flask
 pip install flask_Cors
 pip install PyYAML
+pip install flask_sqlalchemy
 python app.py
 ```
 
