@@ -84,6 +84,7 @@ Install homebrew
 ```
 yarn global add @vue/cli
 yarn add @vue/cli-service
+yarn add vue2-google-maps
 ```
 
 To run client:
