@@ -79,6 +79,22 @@ def info(placeid):
     results = jsonify(requests.get("https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeid+"&key="+GOOGLE_MAPS_API_KEY).text)
     print(results["result"])
     return results
+
+@app.route('/coords_to_address', methods=['POST'])
+def coordsToAddress():
+    lat = request.form['lat']
+    lng = request.form['lng']
+    results = jsonify(requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+str(lat)+","+str(lng)+"&key="+GOOGLE_MAPS_API_KEY).text)
+    return results
+
+@app.route('/address_to_coords', methods=['POST'])
+def addressToCoords():
+    # Specify address in accordance with  the format used by the national postal service of the country concerned.
+    street = request.form['myStreet'].replace(" ", "+")
+    city = ",+" + request.form['myCity'].replace(" ", "+")
+    state = ",+" + request.form['myState'].replace(" ", "+")
+    results = jsonify(requests.get("https://maps.googleapis.com/maps/api/geocode/json?address="+street+city+state+"&key="+GOOGLE_MAPS_API_KEY).text)
+    return results
     
 
 # run app with command python app.py
