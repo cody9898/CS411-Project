@@ -16,7 +16,6 @@ export default {
   },
   created() {
     this.placeid = this.$route.params.placeid
-    console.log(this.placeid)
   }
 }
 </script>
