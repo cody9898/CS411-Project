@@ -73,6 +73,12 @@ def search():
     keyword = request.form['keyword']
     results = requests.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(lat)+","+str(lng)+"&radius="+str(radius)+"&keyword="+keyword+"&key="+GOOGLE_MAPS_API_KEY)
     return jsonify(results.text)
+
+@app.route('/info/<placeid>', methods=['GET'])
+def info(placeid):
+    results = jsonify(requests.get("https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeid+"&key="+GOOGLE_MAPS_API_KEY).text)
+    print(results["result"])
+    return results
     
 
 # run app with command python app.py
