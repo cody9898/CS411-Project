@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import yaml
+import json
 
 
 app = Flask(__name__)
@@ -14,6 +15,7 @@ cors = CORS(app)
 creds = yaml.safe_load(open("creds.yaml", "r"))
 GOOGLE_MAPS_API_KEY = creds["GOOGLE_MAPS_API_KEY"]
 
+# dictionary to convert state abbreviate to full state name 
 state_abbr = {"AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"California","CO":"Colorado","CT":"Connecticut",
 "DE":"Delaware","FL":"Florida","GA":"Georgia","HI":"Hawaii","ID":"Idaho","IL":"Illinois","IN":"Indiana","IA":"Iowa",
 "KS":"Kansas","KY":"Kentucky","LA":"Louisiana","ME":"Maine","MD":"Maryland","MA":"Massachusetts",
@@ -24,42 +26,71 @@ state_abbr = {"AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"
 "WA":"Washington","WV":"West Virginia","WI":"Wisconsin","WY":"Wyoming"}
 
 
+# algoritm to determine how dangerous a restaurant is, 0 is low danger and 10 is high danger 
+def danger(state_nums, county_nums):
+    ratio = county_nums/state_nums 
+    if ratio > .50:
+        return 10
+    elif ratio > .45:
+        return 9
+    elif ratio > .40:
+        return 8
+    elif ratio > .35:
+        return 7
+    elif ratio > .30:
+        return 6
+    elif ratio > .25:
+        return 5
+    elif ratio > .20:
+        return 4
+    elif ratio > .15:
+        return 3
+    elif ratio > .10:
+        return 2
+    elif ratio > .05:
+        return 1
+    return 0
+    
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    result = ''
-    state = ''
-    county = ''
     if request.method == 'GET':
         # get county and state somehow 
+        input_state_abr = 'MA'
+        county = 'Suffolk'
 
-        input_state_abr = 'SOME STATE ABBR'
-        county = 'SOME COUNTY'
-
+        # convert state abbreviation to entire state spelling
         state = state_abbr[input_state_abr]
 
+        # API to find covid data per state 
         states_url = 'https://corona.lmao.ninja/v2/states/{state}'.format(
             state = state
         )
+
+        # API to find covid data per county 
         counties_url = 'https://corona.lmao.ninja/v2/jhucsse/counties/{county}'.format(
             county = county
         )
 
+        # get response from state url and convert the json to dictionary and find the value corresponding for number of cases
         state_response = requests.get(states_url)
-        counties_response = requests.get(counties_url)
+        state_dict = json.loads(state_response.text)
+        state_cases = state_dict["cases"]
 
-        state_results = state_response.json()
-        county_results = counties_response.json()
-        try:
-            state_result = state_results[0]
-        except IndexError:
-            result = {
-                'State': state,
-                'Cases': 'no data'
-            }
-        
-    response = requests.get('https://api.covid19api.com/countries')
-    countries = response.json()
-    return countries
+        # get response from county url and convert json to dictionary, need to find index of correct county so match the 
+        # state with each county to find the correct index of the county, once the county is found the stats of each county 
+        # is in another dictionary. Find the amount of cases using another key
+        counties_response = requests.get(counties_url)
+        counties_dict = json.loads(counties_response.text)
+        county_index = next((index for (index, d) in enumerate(counties_dict) if d["province"] == str(state)), None)
+        specific_county = counties_dict[county_index]
+        county_stats = specific_county["stats"]
+        county_cases = county_stats["confirmed"]
+
+        # get danger rating based off of state and county cases 
+        rating = danger(state_cases,county_cases)
+
+        # return state cases, county cases, and danger rating
+        return "state cases: " + str(state_cases) + " " + "county cases: " + str(county_cases) + " " + "rating: " + str(rating)
 
 @app.route('/ping', methods=['GET'])
 def ping_pong():
