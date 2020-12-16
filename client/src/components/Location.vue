@@ -19,7 +19,7 @@ export default {
   },
   created() {
     this.placeid = this.$route.params.placeid
-    const path = 'http://localhost:5000/';
+    const path = 'http://localhost:5000/info/'+this.place;
     axios.get(path)
         .then((res) => {
           // set address as first api result
