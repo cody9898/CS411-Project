@@ -70,9 +70,12 @@ def search():
 
 @app.route('/info/<placeid>', methods=['GET'])
 def info(placeid):
+
+    # Uses Google Maps API to get address details of the restaurant
+    # Process result and extract county and address
     results = (requests.get("https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeid+"&key="+GOOGLE_MAPS_API_KEY))
-    dictionary = json.loads(results.text)
-    addresses = dictionary["result"]
+    result_dictionary = json.loads(results.text)
+    addresses = result_dictionary["result"]
     address_components = addresses["address_components"]
     county_temp = address_components[3]
     state_temp = address_components[4]
