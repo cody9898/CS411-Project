@@ -23,6 +23,25 @@
         </v-btn>
         <v-btn
         depressed
+        @click="$router.push('Signup')">
+        Sign Up
+        </v-btn>
+        <v-btn
+        depressed
+        @click="$router.push('Login')">
+        Log In!
+        </v-btn>
+        <v-btn
+        depressed
+        @click="$router.push('Profile')">
+        Profile
+        </v-btn>
+        <v-btn
+        depressed
+        @click="$router.push('Logout')">
+        Logout
+        </v-btn>
+        depressed
         
         >
         
