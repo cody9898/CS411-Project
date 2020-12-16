@@ -1,22 +1,34 @@
 <template>
   <div>
     <v-container>
-      <h1> Place id = {{placeid}} </h1>
+      <h1> {{status}} </h1>
     </v-container>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Location',
   data() {
     return {
-      placeid: ""
+      placeid: "",
+      status: ""
     }
   },
   created() {
     this.placeid = this.$route.params.placeid
-    //const path = 'http://localhost:5000/';
+    const path = 'http://localhost:5000/';
+    axios.get(path)
+        .then((res) => {
+          // set address as first api result
+          console.log(res.data)
+          this.status = res.data;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
   }
 }
 </script>
