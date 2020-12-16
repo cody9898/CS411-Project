@@ -53,44 +53,7 @@ def danger(state_nums, county_nums):
     
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'GET':
-        # get county and state somehow 
-        input_state_abr = 'MA'
-        county = 'Suffolk'
-
-        # convert state abbreviation to entire state spelling
-        state = state_abbr[input_state_abr]
-
-        # API to find covid data per state 
-        states_url = 'https://corona.lmao.ninja/v2/states/{state}'.format(
-            state = state
-        )
-
-        # API to find covid data per county 
-        counties_url = 'https://corona.lmao.ninja/v2/jhucsse/counties/{county}'.format(
-            county = county
-        )
-
-        # get response from state url and convert the json to dictionary and find the value corresponding for number of cases
-        state_response = requests.get(states_url)
-        state_dict = json.loads(state_response.text)
-        state_cases = state_dict["cases"]
-
-        # get response from county url and convert json to dictionary, need to find index of correct county so match the 
-        # state with each county to find the correct index of the county, once the county is found the stats of each county 
-        # is in another dictionary. Find the amount of cases using another key
-        counties_response = requests.get(counties_url)
-        counties_dict = json.loads(counties_response.text)
-        county_index = next((index for (index, d) in enumerate(counties_dict) if d["province"] == str(state)), None)
-        specific_county = counties_dict[county_index]
-        county_stats = specific_county["stats"]
-        county_cases = county_stats["confirmed"]
-
-        # get danger rating based off of state and county cases 
-        rating = danger(state_cases,county_cases)
-
-        # return state cases, county cases, and danger rating
-        return "state cases: " + str(state_cases) + " " + "county cases: " + str(county_cases) + " " + "rating: " + str(rating)
+    return '' 
 
 @app.route('/ping', methods=['GET'])
 def ping_pong():
@@ -107,9 +70,45 @@ def search():
 
 @app.route('/info/<placeid>', methods=['GET'])
 def info(placeid):
-    results = jsonify(requests.get("https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeid+"&key="+GOOGLE_MAPS_API_KEY).text)
-    print(results["result"])
-    return results
+    results = (requests.get("https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeid+"&key="+GOOGLE_MAPS_API_KEY))
+    dictionary = json.loads(results.text)
+    addresses = dictionary["result"]
+    address_components = addresses["address_components"]
+    county_temp = address_components[3]
+    state_temp = address_components[4]
+    county = county_temp["short_name"]
+    county = county.split()[0]
+    state = state_temp["long_name"]
+
+    states_url = 'https://corona.lmao.ninja/v2/states/{state}'.format(
+            state = state
+        )
+
+    # API to find covid data per county 
+    counties_url = 'https://corona.lmao.ninja/v2/jhucsse/counties/{county}'.format(
+        county = county
+    )
+
+    # get response from state url and convert the json to dictionary and find the value corresponding for number of cases
+    state_response = requests.get(states_url)
+    state_dict = json.loads(state_response.text)
+    state_cases = state_dict["cases"]
+
+    # get response from county url and convert json to dictionary, need to find index of correct county so match the 
+    # state with each county to find the correct index of the county, once the county is found the stats of each county 
+    # is in another dictionary. Find the amount of cases using another key
+    counties_response = requests.get(counties_url)
+    counties_dict = json.loads(counties_response.text)
+    county_index = next((index for (index, d) in enumerate(counties_dict) if d["province"] == str(state)), None)
+    specific_county = counties_dict[county_index]
+    county_stats = specific_county["stats"]
+    county_cases = county_stats["confirmed"]
+
+    # get danger rating based off of state and county cases 
+    rating = danger(state_cases,county_cases)
+
+    # return state cases, county cases, and danger rating
+    return str(state) + " cases: " + str(state_cases) + " " + str(county)+ " Cases: " + str(county_cases) + " " + "Danger Rating: " + str(rating)
 
 @app.route('/coords_to_address', methods=['POST'])
 def coordsToAddress():
