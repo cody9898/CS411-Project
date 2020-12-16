@@ -29,7 +29,7 @@ py -m pip install --user virtualenv
 
 On macOS:
 ```
-py -m pip install --user virtualenv
+python3 -m pip install --user virtualenv
 ```
 
 Install requirements:
@@ -69,7 +69,6 @@ pip install requests
 pip install flask
 pip install flask_Cors
 pip install PyYAML
-pip install flask_sqlalchemy
 python app.py
 ```
 
@@ -85,6 +84,7 @@ Install homebrew
 ```
 yarn global add @vue/cli
 yarn add @vue/cli-service
+yarn add vue2-google-maps
 ```
 
 To run client:

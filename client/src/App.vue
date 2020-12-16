@@ -19,7 +19,7 @@
           transition="scale-transition"
           width="20"
         />
-        Is It Safe?
+        Covid Meter
         </v-btn>
         <v-btn
         depressed
@@ -40,6 +40,11 @@
         depressed
         @click="$router.push('Logout')">
         Logout
+        </v-btn>
+        depressed
+        
+        >
+        
         </v-btn>
       </v-toolbar-items>
 

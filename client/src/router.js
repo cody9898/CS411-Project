@@ -5,12 +5,19 @@ import profile from './components/profile.vue';
 import login from './components/login.vue';
 import signup from './components/signup.vue';
 import logout from './components/logout.vue';
+import Search from './components/Search.vue';
+import Location from './components/Location.vue'
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/',
+      name: 'Search',
+      component: Search
+    },
     {
       path: '/ping',
       name: 'Ping',
@@ -35,6 +42,11 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: signup,
+    },
+    {
+      path: '/location/:placeid',
+      name: 'Location',
+      component: Location
     }
 
   ],
