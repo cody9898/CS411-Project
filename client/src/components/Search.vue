@@ -10,7 +10,9 @@
           md="12"
         >
           <v-row>
-          <div v-if="center == null"> Could not detect your location automatically </div>
+          <div v-if="center == null"> 
+            {{status}}
+          </div>
           <div v-else> Your location is {{this.myAddressStr}} </div>
           <v-btn small v-on:click="setLocationDialog = true"> Change Location </v-btn>
           </v-row>
@@ -142,7 +144,8 @@ export default {
         keyword: ""
       },
       setLocationDialog: false,
-      invalidAddress: false
+      invalidAddress: false,
+      status: "Locating your position..."
     };
   },
   methods: {
@@ -242,6 +245,7 @@ export default {
     // check geolocation support
     if(!("geolocation" in navigator)) {
       console.log('Geolocation is not available.');
+      this.status = "Cannot detect your location automatically.";
       return;
     }
 
@@ -251,7 +255,8 @@ export default {
       this.getAddress()
     }, err => {
       // ask user to enter location manually
-      console.log(err,"error getting location.")
+      this.status = "Cannot detect your location automatically.";
+      console.log(err,"error getting location!")
     })
   }
 };
